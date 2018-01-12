@@ -1,0 +1,22 @@
+{
+  "reports": [
+    {
+      "name": "keyword_report",
+      "source": "csv,e:/aaa.csv",
+      "dimensions":"tag1, tag2",
+      "aggregates": [
+        ["SUM","f8,TotalClick","f9,TotalCost"]
+      ],
+      "tags": {
+        "tag1": [
+          "EC, f2,REGEXP,.*EC.*",
+          "FC, f2,REGEXP,.*FC.*"
+        ],
+        "tag2": [
+          "取暖器, f3,REGEXP,.*取暖器.*",
+          "暖风机, f3,REGEXP,.*暖风机.*"
+        ]
+      }
+    }
+  ]
+}

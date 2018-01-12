@@ -1,0 +1,23 @@
+---
+report:
+- join_report
+cubes:
+- name: join_report
+  source: mysql
+  store: skyline.simba_adgroup_rpt_daily, r
+  join:
+  - type: inner join
+    store: skyline.simba_adgroups, ad
+    on:
+    - ad.id;=;r.adgroup_id
+    - ad.id;=;r.adgroup_id
+  - type: left join
+    store: skyline.simba_items, item
+    on:
+    - item.id;=;ad.num_iid
+  filter:
+  - ad.client_id;=;1
+  - r.record_on;between;2017-03-06;2017-03-12
+  orderby:
+  - record_on, DESC
+  limit: 10, 0

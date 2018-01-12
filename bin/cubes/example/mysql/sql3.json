@@ -1,0 +1,185 @@
+{
+  "report": [
+    "client_zhizuan_daily_report_0_0",
+    "client_zhizuan_daily_report_1_c10",
+    "client_zhizuan_daily_report_2_c9",
+    "client_zhizuan_daily_report_3_c8",
+    "client_zhizuan_daily_report_4_c6",
+    "client_zhizuan_daily_report_5_c7",
+    "client_zhizuan_daily_report_6_c17",
+    "client_zhizuan_daily_report_7_c5"
+  ],
+  "cubes": [
+    {
+      "name": "client_zhizuan_daily_report_0_0",
+      "display": {
+        "title": "Overview"
+      },
+      "source": "mysql",
+      "dimensions": "`投放日期`, `品牌`, `花费`, `15天展示ROI`, `15天成交金额`",
+      "sql": "SELECT  `投放日期`,  `品牌`,  `全店花费` AS `花费`,  `全店展示ROI` AS `15天展示ROI`,  `展现成交金额` AS `15天成交金额` FROM (  SELECT    CONCAT(date_format('@@@@@START_DATE@@@@@', '%m.%d'), '-', date_format('@@@@@END_DATE@@@@@', '%m.%d')) AS `投放日期`,   CASE i.`client_id`  WHEN 10 THEN 1     WHEN 9 THEN 2    WHEN 8 THEN 3    WHEN 6 THEN 4    WHEN 7 THEN 5    WHEN 17 THEN 6    WHEN 5 THEN 7 END AS `显示顺序`, CASE i.`client_id`     WHEN 10 THEN 'Fisherprice'     WHEN 9 THEN 'Thomas&Friends'    WHEN 8 THEN 'Barbie'    WHEN 6 THEN 'Hotwheels'    WHEN 7 THEN 'Megabloks'    WHEN 17 THEN 'Octonauts'    WHEN 5 THEN 'Mattel'   END AS `品牌`,   i.`全店花费`,    i.`Impression`,    i.`Click`,    i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     client_id AS `client_id`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      client_id,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id IN (10, 9, 8, 6, 7, 17, 5)     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY client_id   ) AS r  ) AS i  LEFT JOIN   (   SELECT     client_id AS `client_id`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      client_id,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id IN (10, 9, 8, 6, 7, 17, 5)     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY client_id   ) AS r  ) AS c ON c.client_id = i.client_id ) AS RPT ORDER BY `显示顺序` ASC  ",
+      "summary": [
+        "SUM,总计;花费, 15天成交金额"
+      ],
+      "summary_calc": {
+        "总计": [
+          "15天展示ROI;/,15天成交金额,花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_1_c10",
+      "display": {
+        "title": "Fisherprice"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 10     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 10     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_2_c9",
+      "display": {
+        "title": "Thomas&Friends"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 9     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 9     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_3_c8",
+      "display": {
+        "title": "Barbie"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 8     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 8     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_4_c6",
+      "display": {
+        "title": "Hotwheels"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 6     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 6     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_5_c7",
+      "display": {
+        "title": "Megabloks"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 7     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 7     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_6_c17",
+      "display": {
+        "title": "Octonauts"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 17     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 17     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_7_c5",
+      "display": {
+        "title": "Mattel"
+      },
+      "source": "mysql",
+      "dimensions": "`Date`, `周数据`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `全店点击ROI`, `15订单金额`, `展现成交金额`, `点击成交金额`, `CTR`, `CPC`, `CPM`, `CVR`",
+      "sql": "SELECT    i.`Date`, skyline.weekinfo(i.`Date`) AS `周数据`,  i.`全店花费`,    i.`Impression`,    i.`Click`,   i.`Orders`,    i.`Store Collection`,    i.`Item Collection`,    i.`Add Cart 15 Days`,    i.`全店展示ROI`,    c.`全店点击ROI`,   i.`15订单金额`,    i.`展现成交金额`,    c.`点击成交金额`,   i.`CTR`,    i.`CPC`,    i.`CPM`,    i.`CVR`  FROM (   SELECT     record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,0) AS `展现成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 5     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 1     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS i  LEFT JOIN   (   SELECT    record_on AS `Date`,    ROUND(cost,0) AS `全店花费`,    impressions AS `Impression`,    click AS `Click`,    pay_count AS `Orders`,    fav_shop_count AS `Store Collection`,    fav_item_count AS `Item Collection`,    cart AS `Add Cart 15 Days`,    CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店点击ROI`,    ROUND(gmv_amt,0) AS `15订单金额`,    ROUND(pay,2) AS `点击成交金额`,    CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,    CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,    CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,    CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`   FROM    (    SELECT      record_on,      SUM(impressions) AS impressions,     SUM(uv) AS uv,     SUM(click) AS click,     SUM(cost) AS cost,     SUM(cart) AS cart,     SUM(fav_item_count) AS fav_item_count,     SUM(fav_shop_count) AS fav_shop_count,     SUM(gmv_amt) AS gmv_amt,     SUM(gmv_count) AS gmv_count,     SUM(pay) AS pay,     SUM(pay_count) AS pay_count    FROM skyline.zhizuan_client_rpt_daily_new    WHERE client_id = 5     AND record_on BETWEEN '@@@@@START_DATE@@@@@' AND '@@@@@END_DATE@@@@@'     AND effect = 15     AND effect_type = 2     AND campaign_model = 0    GROUP BY record_on   ) AS r  ) AS c ON c.`Date` = i.`Date`  ORDER BY i.`Date` ASC ",
+      "summary": [
+        "SUM,展示汇总;全店花费, Impression, Click, Orders, Store Collection, Item Collection, Add Cart 15 Days, 15订单金额, 展现成交金额, 点击成交金额"
+      ],
+      "summary_calc": {
+        "展示汇总": [
+          "CPC;/,全店花费,Click;2",
+          "CTR;/,Click,Impression;2;100",
+          "CPM;/,全店花费,Impression;2;1000",
+          "CVR;/,Orders,Click;2;100",
+          "全店展示ROI;/,展现成交金额,全店花费;2",
+          "全店点击ROI;/,点击成交金额,全店花费;2"
+        ]
+      }
+    }
+  ]
+}

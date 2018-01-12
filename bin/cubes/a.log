@@ -1,0 +1,511 @@
+[32m[2017-03-21 15:34:34] [INFO:json:211] ReportJson:{"reports":[{"name":"keyword_report","source":"csv,./example/csv/auto_keyword_report_2017-03-05_to_2017-03-11.csv","dimensions":"tag1,tag2","aggregates":[["SUM","f8,TotalClick","f9,TotalCost"]],"tags":{"tag1":["EC, f2,REGEXP,.*EC.*","FC, f2,REGEXP,.*FC.*"],"tag2":["取暖器, f3,REGEXP,.*取暖器.*","暖风机, f3,REGEXP,.*暖风机.*"]}}]}[0m
+[32m[2017-03-21 15:34:34] [INFO:engine.reports:144] sqlite dbname: ./d149008167431.db[0m
+[32m[2017-03-21 15:34:34] [INFO:csv:14] creating table[keyword_report_csv1] from csv[./example/csv/auto_keyword_report_2017-03-05_to_2017-03-11.csv][0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:72] 
+	CREATE TABLE IF NOT EXISTS keyword_report_csv1 (id INTEGER NOT NULL PRIMARY KEY, f1 TEXT, f2 TEXT, f3 TEXT, f4 TEXT, f5 TEXT, f6 TEXT, f7 TEXT, f8 TEXT, f9 TEXT, f10 TEXT, f11 TEXT, f12 TEXT, f13 TEXT, f14 TEXT, f15 TEXT, f16 TEXT, f17 TEXT, f18 TEXT, f19 TEXT, f20 TEXT, f21 TEXT, f22 TEXT, f23 TEXT, f24 TEXT, f25 TEXT, f26 TEXT, f27 TEXT, tag2 TEXT, tag1 TEXT);[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:34] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:2000[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:155] INSERT INTO keyword_report_csv1, rows:1635[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:35] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:36] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:37] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:38] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:39] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:40] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:41] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:42] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:43] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:44] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:45] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:46] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:47] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:48] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:49] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:50] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:51] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:52] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:53] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:54] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:132] SQL result: 1[0m
+[32m[2017-03-21 15:34:55] [INFO:csv:100] totalResult = [{"total":"31635"}][0m
+[32m[2017-03-21 15:34:55] [INFO:csv:101] created table[keyword_report_csv1] from csv[./example/csv/auto_keyword_report_2017-03-05_to_2017-03-11.csv][0m
+[32m[2017-03-21 15:34:55] [INFO:engine.reports:134] {"reports":{"keyword_report":{"name":"keyword_report","source":{"name":"./example/csv/auto_keyword_report_2017-03-05_to_2017-03-11.csv","type":"csv"},"stores":[{"name":"keyword_report_csv1","alias":"csv1"}],"dimensions":["tag1","tag2"],"orderby":[{"field":"tag1","order":"ASC"},{"field":"tag2","order":"ASC"}],"aggregates":{"SUM":[{"name":"f8","alias":"TotalClick"},{"name":"f9","alias":"TotalCost"}]},"tags":{"tag1":[{"tag_val":"EC","field":"f2","op":"REGEXP","val":".*EC.*"},{"tag_val":"FC","field":"f2","op":"REGEXP","val":".*FC.*"}],"tag2":[{"tag_val":"取暖器","field":"f3","op":"REGEXP","val":".*取暖器.*"},{"tag_val":"暖风机","field":"f3","op":"REGEXP","val":".*暖风机.*"}]}}}}[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:132] SQL result: 7[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:72] 
+	CREATE TABLE IF NOT EXISTS keyword_report (id INTEGER NOT NULL PRIMARY KEY, tag1 string, tag2 string, TotalClick string, TotalCost string);[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:155] INSERT INTO keyword_report, rows:7[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:216] insert_into_db.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:220] tx begin.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:240] tx commit.[0m
+[32m[2017-03-21 15:34:55] [INFO:sqlite:132] SQL result: 7[0m
+[32m[2017-03-21 15:34:55] [INFO:main:97] reports result:{"keyword_report":[{"TotalClick":"2310","TotalCost":"354342","tag1":"","tag2":""},{"TotalClick":"67","TotalCost":"13830","tag1":"","tag2":"取暖器"},{"TotalClick":"92","TotalCost":"16708","tag1":"","tag2":"暖风机"},{"TotalClick":"2237","TotalCost":"1494156","tag1":"EC","tag2":""},{"TotalClick":"1237","TotalCost":"1416838","tag1":"EC","tag2":"取暖器"},{"TotalClick":"1468","TotalCost":"478362","tag1":"EC","tag2":"暖风机"},{"TotalClick":"30856","TotalCost":"30779161","tag1":"FC","tag2":""}]}[0m

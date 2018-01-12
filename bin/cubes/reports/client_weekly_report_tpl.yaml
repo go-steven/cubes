@@ -1,0 +1,426 @@
+---
+report:
+- client_report
+- client_product_report_ec
+- client_product_report_fc
+- client_product_report_pc
+- client_simba_item_report
+- client_zhizuan_item_report
+layout:
+  reportTitle: dyson 周报
+  pages:
+  - '1':
+    - data: client_report
+      width: 12
+      showType: table
+    - data: client_zhizuan_item_report
+      width: 12
+      showType: pie
+      xLabel: DD
+    '2':
+    - data: client_product_report_ec
+      width: 24
+    '3':
+    - data: client_product_report_fc
+      width: 24
+    '4':
+    - data: client_product_report_pc
+      width: 24
+    '5':
+    - data: client_simba_item_report
+      width: 24
+cubes:
+- name: client_report
+  display:
+    title: Weekly Review 天猫账户整体表现
+  source: cube
+  union:
+  - client_simba_report
+  - client_zhizuan_report,union
+  orderby:
+  - 平台, ASC
+- name: client_simba_report
+  source: cube
+  store: client_simba_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost/100.0,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay/100.0,2)
+  - 购物车;carttotal
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END
+- name: client_simba_report_tmp
+  source: mysql
+  store: skyline.simba_client_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - click;click
+    - cost;cost
+    - direct_pay_count + indirect_pay_count;pay_count
+    - direct_pay + indirect_pay;pay
+    - carttotal;carttotal
+  filter:
+  - source;=;0
+  - record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+- name: client_zhizuan_report
+  source: cube
+  store: client_zhizuan_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay,2)
+  - 购物车;cart
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END
+- name: client_zhizuan_report_tmp
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+- name: client_product_report_ec
+  display:
+    title: 直通车 & 钻展分类表现-EC
+  source: cube
+  union:
+  - client_simba_product_report_ec
+  - client_zhizuan_product_report_ec,union
+  orderby:
+  - 平台, ASC
+- name: client_product_report_fc
+  display:
+    title: 直通车 & 钻展分类表现-FC
+  source: cube
+  union:
+  - client_simba_product_report_fc
+  - client_zhizuan_product_report_fc,union
+  orderby:
+  - 平台, ASC
+- name: client_product_report_pc
+  display:
+    title: 直通车 & 钻展分类表现-PC
+  source: cube
+  union:
+  - client_simba_product_report_pc
+  - client_zhizuan_product_report_pc,union
+  orderby:
+  - 平台, ASC
+- name: client_simba_product_report_ec
+  source: cube
+  store: client_simba_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost/100.0,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay/100.0,2)
+  - 购物车;carttotal
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END
+  filter:
+  - product;=;ec
+- name: client_simba_product_report_fc
+  source: cube
+  store: client_simba_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost/100.0,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay/100.0,2)
+  - 购物车;carttotal
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END
+  filter:
+  - product;=;fc
+- name: client_simba_product_report_pc
+  source: cube
+  store: client_simba_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost/100.0,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay/100.0,2)
+  - 购物车;carttotal
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END
+  filter:
+  - product;=;pc
+- name: client_simba_product_report_tmp
+  source: mysql
+  store: skyline.simba_adgroup_rpt_daily,r
+  join:
+  - type: inner join
+    store: skyline.simba_adgroups, ad
+    'on':
+    - ad.id;=;r.adgroup_id
+  - type: inner join
+    store: skyline.simba_items, i
+    'on':
+    - i.id;=;ad.num_iid
+  dimensions: product
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - click;click
+    - cost;cost
+    - direct_pay_count + indirect_pay_count;pay_count
+    - direct_pay + indirect_pay;pay
+    - carttotal;carttotal
+  filter:
+  - r.source;=;0
+  - r.record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+  tags:
+    product:
+    - ec;i.title;REGEXP;.*HP01|HP02|AM11|AM10|AM06|AM07|AM08|TP02|DP01|AM09.*
+    - fc;i.title;REGEXP;.*DC26|DC36|DC48|DC52|V6TopDog|V6Car|V6Motorhead|V6Absolute|V8Absolute|V8Fluffy|V6Fluffy|V6Fluffy＋|V6Origin|CY22|V6Mattress|DC45.*
+    - pc;i.title;REGEXP;.*HD01.*
+- name: client_zhizuan_product_report_ec
+  _comment: 钻展分类表现-ec
+  source: cube
+  store: client_zhizuan_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay,2)
+  - 购物车;cart
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END
+  filter:
+  - product;=;ec
+- name: client_zhizuan_product_report_fc
+  _comment: 钻展分类表现-fc
+  source: cube
+  store: client_zhizuan_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay,2)
+  - 购物车;cart
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END
+  filter:
+  - product;=;fc
+- name: client_zhizuan_product_report_pc
+  _comment: 钻展分类表现-pc
+  source: cube
+  store: client_zhizuan_product_report_tmp
+  dimensions: 平台, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay,2)
+  - 购物车;cart
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END
+  filter:
+  - product;=;pc
+- name: client_zhizuan_product_report_tmp
+  _comment: 生成临时CUBE
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  dimensions: product
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+  tags:
+    product:
+    - ec;campaign_name;REGEXP;.*EC.*
+    - fc;campaign_name;REGEXP;.*FC.*
+    - pc;campaign_name;REGEXP;.*PC.*
+- name: client_simba_item_report
+  _comment: 直通车子分类表现
+  display:
+    title: 直通车子分类表现
+  source: cube
+  store: client_simba_item_report_tmp
+  dimensions: 渠道, DD, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 渠道;'直通车'
+  - DD;item
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost/100.0,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay/100.0,2)
+  - 购物车;carttotal
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END
+  filter:
+  - item;!=;
+- name: client_simba_item_report_tmp
+  _comment: 生成临时CUBE
+  source: mysql
+  store: skyline.simba_adgroup_rpt_daily,r
+  join:
+  - type: inner join
+    store: skyline.simba_adgroups, ad
+    'on':
+    - ad.id;=;r.adgroup_id
+  - type: inner join
+    store: skyline.simba_items, i
+    'on':
+    - i.id;=;ad.num_iid
+  dimensions: item
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - click;click
+    - cost;cost
+    - direct_pay_count + indirect_pay_count;pay_count
+    - direct_pay + indirect_pay;pay
+    - carttotal;carttotal
+  filter:
+  - r.source;=;0
+  - r.record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+  tags:
+    item:
+    - 净化;i.title;REGEXP;.*AM11|HP01|HP02.*
+    - 风扇;i.title;REGEXP;.*AM06|AM07|AM08|TP02|DP01.*
+    - 取暖器;i.title;REGEXP;.*AM09.*
+    - 加湿器;i.title;REGEXP;.*AM10.*
+    - 吸尘器;i.title;REGEXP;.*V6TopDog|V6Car|V6Motorhead|V6Origin|V6Fluffy|V6Fluffy＋|V6Absolute|V8Absolute|V8Fluffy|DC45.*
+    - 车载吸尘器;i.title;REGEXP;.*V6Car.*
+    - 圆筒吸尘器;i.title;REGEXP;.*CY22|DC26|DC36|DC48|DC52.*
+    - 除螨仪;i.title;REGEXP;.*V6Mattress.*
+    - 吹风机;i.title;REGEXP;.*HD01.*
+- name: client_zhizuan_item_report
+  _comment: 钻展子分类表现
+  display:
+    title: 钻展子分类表现
+  source: cube
+  store: client_zhizuan_item_report_tmp
+  dimensions: 渠道, DD, 展现量, 点击量, CTR, 花费, CPC, 成交笔数, 成交金额, 购物车, ROI, CVR, CPU
+  mappings:
+  - 渠道;'钻展'
+  - DD;item
+  - 展现量;impressions
+  - 点击量;click
+  - CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0
+    END
+  - 花费;ROUND(cost,2)
+  - CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END
+  - 成交笔数;pay_count
+  - 成交金额;ROUND(pay,2)
+  - 购物车;cart
+  - ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END
+  filter:
+  - item;!=;
+- name: client_zhizuan_item_report_tmp
+  _comment: 生成临时CUBE
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  dimensions: item
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@
+  tags:
+    item:
+    - 吸尘器;campaign_name;REGEXP;.*吸尘器.*
+    - 除螨;campaign_name;REGEXP;.*除螨.*
+    - 车载;campaign_name;REGEXP;.*车载.*
+    - 吹风机;campaign_name;REGEXP;.*吹风机.*
+    - 净化;campaign_name;REGEXP;.*净化.*
+    - 圆筒;campaign_name;REGEXP;.*圆筒.*
+    - 取暖;campaign_name;REGEXP;.*取暖.*

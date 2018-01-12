@@ -1,0 +1,20 @@
+{
+  "report":["mapping_report"],
+  "cubes" : [{
+    "name": "mapping_report",
+    "source": "mysql",
+    "store": "skyline.zhizuan_campaign_rpt_daily",
+    "dimensions":"ClientId, campaign_id, NewCampaignName, campaign_name, record_on, impressions, uv, click, cost",
+    "mappings":[
+      "ClientId;client_id",
+      "NewCampaignName;substr(campaign_name, 1, 2)"
+    ],
+    "filter": [
+      "client_id;=;1",
+      "record_on;between;2017-03-06;2017-03-12"
+    ],
+    "orderby":["record_on, DESC"],
+    "limit":"1, 0"
+  }
+  ]
+}

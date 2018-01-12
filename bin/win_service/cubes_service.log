@@ -1,0 +1,22 @@
+[32m[2017-03-21 09:57:30] [INFO:main:73] Entering cubes windows service: args = ["cubes_service.exe","install"], len(args) = 2[0m
+[32m[2017-03-21 09:57:30] [INFO:main:97] Service "CubesService" installed.
+[0m
+[32m[2017-03-21 09:57:52] [INFO:main:73] Entering cubes windows service: args = ["cubes_service.exe","start"], len(args) = 2[0m
+[32m[2017-03-21 09:57:52] [INFO:main:116] Service "CubesService" started.
+[0m
+[32m[2017-03-21 10:41:25] [INFO:main:73] Entering cubes windows service: args = ["cubes_service.exe"], len(args) = 1[0m
+[32m[2017-03-21 10:41:25] [INFO:main:57] ServiceRunner started.[0m
+[32m[2017-03-21 10:41:25] [INFO:main:61] ServiceRunner running.[0m
+[32m[2017-03-21 10:41:25] [INFO:gin_server:21] Cubes Server started at:0.0.0.0:9100[0m
+[32m[2017-03-21 10:41:25] [INFO:gin_server:23] Cubes Server exit from:0.0.0.0:9100[0m
+[32m[2017-03-21 10:41:27] [INFO:main:65] CubesRunner stopped.[0m
+[32m[2017-03-21 11:04:02] [INFO:main:73] Entering cubes windows service: args = ["cubes_service.exe","stop"], len(args) = 2[0m
+[32m[2017-03-21 11:04:02] [INFO:main:124] Service "CubesService" stopped.
+[0m
+[32m[2017-03-21 11:04:05] [INFO:main:73] Entering cubes windows service: args = ["cubes_service.exe","start"], len(args) = 2[0m
+[32m[2017-03-21 11:04:06] [INFO:main:116] Service "CubesService" started.
+[0m
+[32m[2017-03-21 11:08:18] [INFO:main:74] Entering cubes windows service: args = ["cubes_service.exe","stop"], len(args) = 2[0m
+[32m[2017-03-21 11:08:23] [INFO:main:74] Entering cubes windows service: args = ["cubes_service.exe","start"], len(args) = 2[0m
+[32m[2017-03-21 15:22:53] [INFO:main:74] Entering cubes windows service: args = ["cubes_service.exe","stop"], len(args) = 2[0m
+[32m[2017-03-21 15:22:57] [INFO:main:74] Entering cubes windows service: args = ["cubes_service.exe","start"], len(args) = 2[0m

@@ -1,0 +1,463 @@
+---
+report:
+# 天猫账户整体表现
+- 天猫账户整体表现（店铺）
+- 天猫账户整体表现（直通车）
+- 天猫账户整体表现（钻展）
+#  直通车 & 钻展分类表现
+- 直通车 & 钻展分类表现（EC）
+- 直通车 & 钻展分类表现（FC）
+- 直通车 & 钻展分类表现（PC）
+# 直通车 & 钻展子分类表现
+- 直通车子分类表现
+- 钻展子分类表现
+
+cubes:
+########################################################################################
+####
+####  天猫账户整体表现CUBE
+####
+########################################################################################
+- name: 天猫账户整体表现（店铺）
+  union:
+  - simba_client_curr_period
+  - zhizuan_client_curr_period,union all
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  summary:
+  - SUM,总计; Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+- name: 天猫账户整体表现（直通车）
+  union:
+  - simba_client_last_period
+  - simba_client_curr_period,union all
+  dimensions: Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  summary:
+  - CONTRAST,对比; Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+- name: 天猫账户整体表现（钻展）
+  union:
+  - zhizuan_client_last_period
+  - zhizuan_client_curr_period,union all
+  dimensions: Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  summary:
+  - CONTRAST,对比; Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+########################################################################################
+####
+####  直通车 & 钻展分类表现 CUBE
+####
+########################################################################################
+- name: 直通车 & 钻展分类表现（EC）
+  union:
+  - simba_product_ec
+  - zhizuan_product_ec,union all
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+- name: 直通车 & 钻展分类表现（FC）
+  union:
+  - simba_product_fc
+  - zhizuan_product_fc,union all
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+- name: 直通车 & 钻展分类表现（PC）
+  union:
+  - simba_product_pc
+  - zhizuan_product_pc,union all
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+########################################################################################
+####
+####  直通车临时透视CUBE
+####
+########################################################################################
+- name: simba_client_curr_period
+  store: simba_client_base_curr_period
+  dimensions: 平台, Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - Date;CASE '@@@@@PERIOD@@@@@' WHEN 'WEEK' THEN '本周' WHEN 'MONTH' THEN '本月' WHEN 'QUARTER' THEN '本季度' WHEN 'YEAR' THEN '本年' ELSE '' END
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+  
+- name: simba_client_last_period
+  store: simba_client_base_last_period
+  dimensions: 平台, Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - Date;CASE '@@@@@PERIOD@@@@@' WHEN 'WEEK' THEN '上周' WHEN 'MONTH' THEN '上月' WHEN 'QUARTER' THEN '上季度' WHEN 'YEAR' THEN '上年' ELSE '' END
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+
+- name: simba_client_base_curr_period  # 直通车店铺统计--基础数据--本周/月/季/年
+  source: mysql
+  store: skyline.simba_client_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions                           # 展现量
+    - click;click                                       # 点击量
+    - cost/100;cost                                     # 花费(元)
+    - direct_pay_count + indirect_pay_count;pay_count   # 总成交笔数
+    - (direct_pay + indirect_pay)/100;pay               # 总成交金额(元)
+    - carttotal;cart                                    # 总购物车数
+    - fav_item_count;fav_item_count                     # 收藏宝贝量
+    - fav_shop_count;fav_shop_count                     # 收藏店铺量
+  filter:
+  - source;=;0
+  - record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+- name: simba_client_base_last_period  # 直通车店铺统计--基础数据--上周/月/季/年
+  source: mysql
+  store: skyline.simba_client_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions                           # 展现量
+    - click;click                                       # 点击量
+    - ROUND(cost/100.0,2);cost                          # 花费(元)
+    - direct_pay_count + indirect_pay_count;pay_count   # 总成交笔数
+    - ROUND((direct_pay + indirect_pay)/100.0,2);pay    # 总成交金额(元)
+    - carttotal;cart                                    # 总购物车数
+    - fav_item_count;fav_item_count                     # 收藏宝贝量
+    - fav_shop_count;fav_shop_count                     # 收藏店铺量
+  filter:
+  - source;=;0
+  - record_on;between;DATE_SUB('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@);DATE_SUB('@@@@@START_DATE@@@@@', INTERVAL 1 DAY)
+
+- name: simba_product_ec  # 直通车分类表现 - EC
+  store: simba_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;ec
+- name: simba_product_fc # 直通车分类表现 - FC
+  store: simba_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;fc
+- name: simba_product_pc # 直通车分类表现 - PC
+  store: simba_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;pc
+- name: simba_product_tmp
+  store: simba_product_base
+  dimensions: 平台, Product, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'直通车'
+  - Product;product
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+- name: simba_product_base
+  source: mysql
+  store: skyline.simba_adgroup_rpt_daily,r
+  join:
+  - type: inner join
+    store: skyline.simba_adgroups, ad
+    'on':
+    - ad.id;=;r.adgroup_id
+  - type: inner join
+    store: skyline.simba_items, i
+    'on':
+    - i.id;=;ad.num_iid
+  - type: inner join
+    store: skyline.simba_campaigns, c
+    'on':
+    - c.id;=;ad.campaign_id
+  dimensions: product
+  aggregates:
+  - - SUM
+    - impressions;impressions                           # 展现量
+    - click;click                                       # 点击量
+    - ROUND(cost/100.0,2);cost                          # 花费(元)
+    - direct_pay_count + indirect_pay_count;pay_count   # 总成交笔数
+    - ROUND((direct_pay + indirect_pay)/100.0,2);pay    # 总成交金额(元)
+    - carttotal;cart                                    # 总购物车数
+    - fav_item_count;fav_item_count                     # 收藏宝贝量
+    - fav_shop_count;fav_shop_count                     # 收藏店铺量
+  filter:
+  - r.source;=;0
+  - r.record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+  - c.title;not like;%皇冠车手%
+  - c.title;not like;%阻击计划%
+  - c.title;not like;%干手器%
+  - c.title;not like;%配件%
+  tags:
+    product:
+    - ec;i.title;REGEXP;.*HP01|HP02|AM11|AM10|AM06|AM07|AM08|TP02|DP01|AM09.*
+    - fc;i.title;REGEXP;.*DC26|DC36|DC48|DC52|V6TopDog|V6Car|V6Motorhead|V6Absolute|V8Absolute|V8Fluffy|V6Fluffy|V6Fluffy＋|V6Origin|CY22|V6Mattress|DC45.*
+    - pc;i.title;REGEXP;.*HD01.*
+
+- name: 直通车子分类表现  # 直通车子分类表现
+  store: simba_item_base
+  dimensions: 渠道, DD, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 渠道;'直通车'
+  - DD;item
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+  filter:
+  - item;!=;
+- name: simba_item_base
+  source: mysql
+  store: skyline.simba_adgroup_rpt_daily,r
+  join:
+  - type: inner join
+    store: skyline.simba_adgroups, ad
+    'on':
+    - ad.id;=;r.adgroup_id
+  - type: inner join
+    store: skyline.simba_items, i
+    'on':
+    - i.id;=;ad.num_iid
+  - type: inner join
+    store: skyline.simba_campaigns, c
+    'on':
+    - c.id;=;ad.campaign_id
+  dimensions: item
+  aggregates:
+  - - SUM
+    - impressions;impressions                           # 展现量
+    - click;click                                       # 点击量
+    - ROUND(cost/100.0,2);cost                          # 花费(元)
+    - direct_pay_count + indirect_pay_count;pay_count   # 总成交笔数
+    - ROUND((direct_pay + indirect_pay)/100.0,2);pay    # 总成交金额(元)
+    - carttotal;cart                                    # 总购物车数
+    - fav_item_count;fav_item_count                     # 收藏宝贝量
+    - fav_shop_count;fav_shop_count                     # 收藏店铺量
+  filter:
+  - r.source;=;0
+  - r.record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+  - c.title;not like;%皇冠车手%
+  - c.title;not like;%阻击计划%
+  - c.title;not like;%干手器%
+  - c.title;not like;%配件%
+  tags:
+    item:
+    - 净化;i.title;REGEXP;.*AM11|HP01|HP02.*
+    - 风扇;i.title;REGEXP;.*AM06|AM07|AM08|TP02|DP01.*
+    - 取暖器;i.title;REGEXP;.*AM09.*
+    - 加湿器;i.title;REGEXP;.*AM10.*
+    - 吸尘器;i.title;REGEXP;.*V6TopDog|V6Car|V6Motorhead|V6Origin|V6Fluffy|V6Fluffy＋|V6Absolute|V8Absolute|V8Fluffy|DC45.*;.*车载吸尘器|圆筒吸尘器.*
+    - 车载吸尘器;i.title;REGEXP;.*V6Car.*
+    - 圆筒吸尘器;i.title;REGEXP;.*CY22|DC26|DC36|DC48|DC52.*
+    - 除螨仪;i.title;REGEXP;.*V6Mattress.*
+    - 吹风机;i.title;REGEXP;.*HD01.*
+########################################################################################
+####
+#### 钻展临时透视CUBE
+####
+########################################################################################
+- name: zhizuan_client_curr_period
+  store: zhizuan_client_base_curr_period
+  dimensions: 平台, Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - Date;CASE '@@@@@PERIOD@@@@@' WHEN 'WEEK' THEN '本周' WHEN 'MONTH' THEN '本月' WHEN 'QUARTER' THEN '本季度' WHEN 'YEAR' THEN '本年' ELSE '' END
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+
+- name: zhizuan_client_last_period
+  store: zhizuan_client_base_last_period
+  dimensions: 平台, Date, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - Date;CASE '@@@@@PERIOD@@@@@' WHEN 'WEEK' THEN '上周' WHEN 'MONTH' THEN '上月' WHEN 'QUARTER' THEN '上季度' WHEN 'YEAR' THEN '上年' ELSE '' END
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+
+- name: zhizuan_client_base_curr_period  # 钻展店铺统计--基础数据--本周/月/季/年
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+- name: zhizuan_client_base_last_period  # 钻展店铺统计--基础数据--上周/月/季/年
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;DATE_SUB('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@);DATE_SUB('@@@@@START_DATE@@@@@', INTERVAL 1 DAY)
+
+- name: zhizuan_product_ec  # 智钻分类表现 - EC
+  store: zhizuan_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;ec
+- name: zhizuan_product_fc # 智钻分类表现 - FC
+  store: zhizuan_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;fc
+- name: zhizuan_product_pc # 智钻分类表现 - PC
+  store: zhizuan_product_tmp
+  dimensions: 平台, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  filter:
+  - Product;=;pc
+  
+- name: zhizuan_product_tmp
+  store: zhizuan_product_base
+  dimensions: 平台, Product, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 平台;'钻展'
+  - Product;product
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+
+- name: zhizuan_product_base
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  dimensions: product
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+  tags:
+    product:
+    - ec;campaign_name;REGEXP;.*EC.*
+    - fc;campaign_name;REGEXP;.*FC.*
+    - pc;campaign_name;REGEXP;.*吹风机.*
+- name: 钻展子分类表现  # 钻展子分类表现
+  store: zhizuan_item_base
+  dimensions: 渠道, DD, Impression, Click, CTR, Spend, CPC, Order, Sale, Cart, Fav, ROI, CVR, CPU
+  mappings:
+  - 渠道;'钻展'
+  - DD;item
+  - Impression;impressions                                                             # 展现量
+  - Click;click                                                                        # 点击量
+  - CTR;CASE WHEN impressions>0 THEN ROUND(click / impressions, 4) ELSE 0 END
+  - Spend;ROUND(cost,2)                                                                # 花费
+  - CPC;CASE WHEN click>0 THEN ROUND(cost / click, 4) ELSE 0 END
+  - Order;pay_count                                                                    # 成交笔数
+  - Sale;ROUND(pay,2)                                                                  # 成交金额
+  - Cart;cart                                                                          # 购物车
+  - Fav;fav_shop_count                                                                 # 收藏店铺量
+  - ROI;CASE WHEN cost>0 THEN ROUND(pay / cost, 4) ELSE 0 END
+  - CVR;CASE WHEN click>0 THEN ROUND(pay_count / click, 4) ELSE 0 END
+  - CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 4) ELSE 0 END
+  filter:
+  - item;!=;
+- name: zhizuan_item_base
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  dimensions: item
+  aggregates:
+  - - SUM
+    - impressions;impressions
+    - uv;uv
+    - click;click
+    - cost;cost
+    - cart;cart
+    - fav_item_count;fav_item_count
+    - fav_shop_count;fav_shop_count
+    - gmv_amt;gmv_amt
+    - gmv_count;gmv_count
+    - pay;pay
+    - pay_count;pay_count
+  filter:
+  - record_on;between;'@@@@@START_DATE@@@@@';DATE_SUB(DATE_ADD('@@@@@START_DATE@@@@@', INTERVAL 1 @@@@@PERIOD@@@@@), INTERVAL 1 DAY)
+  tags:
+    item:
+    - 吸尘器;campaign_name;REGEXP;.*吸尘器.*
+    - 除螨;campaign_name;REGEXP;.*除螨.*
+    - 车载;campaign_name;REGEXP;.*车载.*
+    - 吹风机;campaign_name;REGEXP;.*吹风机.*
+    - 净化;campaign_name;REGEXP;.*净化.*
+    - 圆筒;campaign_name;REGEXP;.*圆筒.*
+    - 取暖;campaign_name;REGEXP;.*取暖.*
+    - 全;campaign_name;REGEXP;.*全.*

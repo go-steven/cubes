@@ -1,0 +1,15 @@
+---
+report:
+- select_report
+layout:
+  test: 1
+cubes:
+- name: select_report
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  filter:
+  - client_id;=;1
+  - record_on;between;2017-03-06;2017-03-12
+  orderby:
+  - record_on, DESC
+  limit: 1, 0

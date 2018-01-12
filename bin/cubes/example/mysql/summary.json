@@ -1,0 +1,28 @@
+{
+  "report":["summary_report"],
+  "cubes" : [ {
+    "name": "summary_report",
+    "source": "mysql",
+    "store": "skyline.zhizuan_campaign_rpt_daily",
+    "dimensions":"client_id, campaign_id, campaign_name, record_on, impressions, uv, click, cost",
+    "filter": [
+      "client_id;=;1",
+      "record_on;between;2017-03-06;2017-03-12"
+    ],
+    "orderby":["record_on, DESC"],
+    "limit":"10,0",
+    "summary": [
+      "SUM,总计;impressions,uv,click,cost",
+      "CONTRAST,对比;impressions,uv,click,cost"
+    ],
+    "summary_calc": {
+      "总计":[
+        "cpc;/,cost,click;4"
+      ],
+      "对比":[
+        "cpc;/,cost,click;4"
+      ]
+    }
+  }
+  ]
+}

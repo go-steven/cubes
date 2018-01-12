@@ -1,0 +1,47 @@
+---
+report:
+- sql_report
+cubes:
+- name: sql_report
+  source: mysql
+  dimensions: >
+    `Date`, `全店花费`, `Impression`, `Click`, `Orders`, `Store Collection`, `Item Collection`, `Add Cart 15 Days`, `全店展示ROI`, `15订单金额`, `展现成交金额`, `CTR`, `CPC`, `CPM`, `CVR`
+  sql: >
+        SELECT
+            record_on AS `Date`,
+            ROUND(cost,0) AS `全店花费`,
+            impressions AS `Impression`,
+            click AS `Click`,
+            pay_count AS `Orders`,
+            fav_shop_count AS `Store Collection`,
+            fav_item_count AS `Item Collection`,
+            cart AS `Add Cart 15 Days`,
+            CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END AS `全店展示ROI`,
+            ROUND(gmv_amt,0) AS `15订单金额`,
+            ROUND(pay,0) AS `展现成交金额`,
+            CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END AS `CTR`,
+            CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END AS `CPC`,
+            CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END AS `CPM`,
+            CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END AS `CVR`
+        FROM    (
+            SELECT
+                record_on,
+                SUM(impressions) AS impressions,
+                SUM(uv) AS uv,
+                SUM(click) AS click,
+                SUM(cost) AS cost,
+                SUM(cart) AS cart,
+                SUM(fav_item_count) AS fav_item_count,
+                SUM(fav_shop_count) AS fav_shop_count,
+                SUM(gmv_amt) AS gmv_amt,
+                SUM(gmv_count) AS gmv_count,
+                SUM(pay) AS pay,
+                SUM(pay_count) AS pay_count
+            FROM skyline.zhizuan_client_rpt_daily_new
+            WHERE client_id = 5
+                AND record_on BETWEEN '2017-10-01' AND '2017-10-31'
+                AND effect = 15
+                AND effect_type = 1
+                AND campaign_model = 0
+            GROUP BY record_on
+        ) X

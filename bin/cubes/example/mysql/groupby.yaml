@@ -1,0 +1,94 @@
+---
+report:
+- groupby_report
+- groupby_report2
+- groupby_report3
+cubes:
+- name: groupby_report
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  filter:
+  - client_id;=;1
+  - record_on;between;2017-03-06;2017-03-12
+  dimensions: campaign_id, campaign_name, record_on
+  aggregates:
+  - - SUM
+    - impressions;total_impressions
+    - uv;total_uv
+    - click;total_click
+    - cost;total_cost
+  - - AVG
+    - impressions;avg_impressions
+    - uv;avg_uv
+    - click;avg_click
+    - cost;avg_cost
+  - - MAX
+    - impressions;max_impressions
+    - uv;max_uv
+    - click;max_click
+    - cost;max_cost
+  - - MIN
+    - impressions;min_impressions
+    - uv;min_uv
+    - click;min_click
+    - cost;min_cost
+  - - COUNT
+    - 1;total_cnt
+- name: groupby_report2
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  filter:
+  - client_id;=;1
+  - record_on;between;2017-03-06;2017-03-12
+  aggregates:
+  - - SUM
+    - impressions;total_impressions
+    - uv;total_uv
+    - click;total_click
+    - cost;total_cost
+  - - AVG
+    - impressions;avg_impressions
+    - uv;avg_uv
+    - click;avg_click
+    - cost;avg_cost
+  - - MAX
+    - impressions;max_impressions
+    - uv;max_uv
+    - click;max_click
+    - cost;max_cost
+  - - MIN
+    - impressions;min_impressions
+    - uv;min_uv
+    - click;min_click
+    - cost;min_cost
+  - - COUNT
+    - 1;total_cnt
+- name: groupby_report3
+  source: mysql
+  store: skyline.zhizuan_campaign_rpt_daily
+  filter:
+  - client_id;=;1
+  - record_on;between;2017-03-06;2017-03-12
+  aggregates:
+  - - SUM
+    - impressions
+    - uv
+    - click
+    - cost
+  - - AVG
+    - impressions
+    - uv
+    - click
+    - cost
+  - - MAX
+    - impressions
+    - uv
+    - click
+    - cost
+  - - MIN
+    - impressions
+    - uv
+    - click
+    - cost
+  - - COUNT
+    - 1;total_cnt

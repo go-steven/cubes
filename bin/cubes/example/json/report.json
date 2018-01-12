@@ -1,0 +1,19 @@
+{
+  "report":["json_report"],
+  "_comment": "",
+  "cube": {
+      "name": "json_report",
+      "_comment": "",
+      "source": "json,./example/json/aaa.json",
+      "dimensions":"sex",
+      "aggregates": [
+        ["COUNT","*;记录数"]
+      ],
+      "tags": {
+        "sex": [
+          "男;title;REGEXP;.*男.*",
+          "女;title;REGEXP;.*女.*"
+        ]
+      }
+    }
+}

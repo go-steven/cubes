@@ -1,0 +1,58 @@
+{
+  "report":["tags_report"],
+  "cubes": [{
+    "name": "tags_report",
+    "source": "mysql",
+    "store": "skyline.zhizuan_campaign_rpt_daily",
+    "filter": [
+      "client_id;=;1",
+      "record_on;between;2017-03-06;2017-03-12"
+    ],
+    "dimensions": "tag1, tag2",
+    "aggregates": [
+      [
+        "SUM",
+        "impressions;total_impressions",
+        "uv;total_uv",
+        "click;total_click",
+        "cost;total_cost"
+      ],
+      [
+        "AVG",
+        "impressions;avg_impressions",
+        "uv;avg_uv",
+        "click;avg_click",
+        "cost;avg_cost"
+      ],
+      [
+        "MAX",
+        "impressions;max_impressions",
+        "uv;max_uv",
+        "click;max_click",
+        "cost;max_cost"
+      ],
+      [
+        "MIN",
+        "impressions;min_impressions",
+        "uv;min_uv",
+        "click;min_click",
+        "cost;min_cost"
+      ],
+      [
+        "COUNT",
+        "1;total_cnt"
+      ]
+    ],
+    "tags": {
+      "tag1": [
+        "EC;campaign_name;REGEXP;.*EC.*",
+        "FC;campaign_name;REGEXP;.*FC.*"
+      ],
+      "tag2": [
+        "净化器;campaign_name;REGEXP;.*净化器.*;.*家.*",
+        "吸尘器;campaign_name;REGEXP;.*吸尘器.*"
+      ]
+    }
+  }
+  ]
+}

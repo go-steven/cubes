@@ -1,0 +1,286 @@
+{
+  "report": [
+    "client_simba_daily_goal",
+    "client_simba_daily_report",
+    "client_zuanzhan_daily_goal",
+    "client_zhizuan_daily_report"
+  ],
+  "cubes": [
+    {
+      "name": "client_simba_daily_goal",
+      "display": {
+        "title": "直通车目标"
+      },
+      "source": "mysql",
+      "store": "skyline.client_goal_settings",
+      "dimensions": "日期, 周数据, 花费, 点击, ROI, 成交金额, CPC",
+      "mappings": [
+        "日期;record_on",
+        "周数据;CONCAT('第', skyline.week_of_year(record_on), '周', ' / ', skyline.day_of_week(record_on))",
+        "展现;pv",
+        "点击;clicks",
+        "CTR;CASE WHEN pv>0 THEN ROUND(100.0 * clicks / pv, 2) ELSE 0 END",
+        "CPC;CASE WHEN clicks>0 THEN ROUND(cost / clicks, 2) ELSE 0 END",
+        "花费;cost",
+        "成交笔数;pay_count",
+        "成交金额;pay",
+        "加购;carts",
+        "收藏店铺;fav_shops",
+        "收藏宝贝;fav_items",
+        "ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END",
+        "CVR;CASE WHEN clicks>0 THEN ROUND(100.0 * pay_count / clicks, 2) ELSE 0 END",
+        "CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 2) ELSE 0 END",
+        "CPM;CASE WHEN pv>0 THEN ROUND(1000.0 * cost / pv , 2) ELSE 0 END"
+      ],
+      "filter": [
+        "platform;=;simba",
+        "record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@"
+      ],
+      "orderby": [
+        "日期, ASC"
+      ],
+      "summary": [
+        "SUM,汇总; 花费, 展现, 点击, 成交笔数, 成交金额"
+      ],
+      "summary_calc": {
+        "汇总": [
+          "ROI;/,成交金额,花费;2",
+          "CPC;/,花费,点击;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zuanzhan_daily_goal",
+      "display": {
+        "title": "钻展目标"
+      },
+      "source": "mysql",
+      "store": "skyline.client_goal_settings",
+      "dimensions": "日期, 周数据, 花费, 点击, ROI, 成交金额, CPC",
+      "mappings": [
+        "日期;record_on",
+        "周数据;CONCAT('第', skyline.week_of_year(record_on), '周', ' / ', skyline.day_of_week(record_on))",
+        "展现;pv",
+        "点击;clicks",
+        "CTR;CASE WHEN pv>0 THEN ROUND(100.0 * clicks / pv, 2) ELSE 0 END",
+        "CPC;CASE WHEN clicks>0 THEN ROUND(cost / clicks, 2) ELSE 0 END",
+        "花费;cost",
+        "成交笔数;pay_count",
+        "成交金额;pay",
+        "加购;carts",
+        "收藏店铺;fav_shops",
+        "收藏宝贝;fav_items",
+        "ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END",
+        "CVR;CASE WHEN clicks>0 THEN ROUND(100.0 * pay_count / clicks, 2) ELSE 0 END",
+        "CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count, 2) ELSE 0 END",
+        "CPM;CASE WHEN pv>0 THEN ROUND(1000.0 * cost / pv , 2) ELSE 0 END"
+      ],
+      "filter": [
+        "platform;=;zuanshi",
+        "record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@"
+      ],
+      "orderby": [
+        "日期, ASC"
+      ],
+      "summary": [
+        "SUM,汇总; 花费, 展现, 点击, 成交笔数, 成交金额"
+      ],
+      "summary_calc": {
+        "汇总": [
+          "ROI;/,成交金额,花费;2",
+          "CPC;/,花费,点击;2"
+        ]
+      }
+    },
+    {
+      "name": "client_simba_daily_report",
+      "display": {
+        "title": "直通车实际"
+      },
+      "source": "cube",
+      "store": "client_simba_daily_report_tmp2",
+      "dimensions": "日期, 周数据, 花费, 花费目标, 花费完成率, CPC, 点击, ROI, ROI目标, ROI完成率, 成交额",
+      "mappings": [
+        "花费完成率;CONCAT(CASE WHEN `花费目标`>0 THEN ROUND(100.0 * `花费` / `花费目标`, 2) ELSE 0 END, '%')",
+        "ROI完成率;CONCAT(CASE WHEN `ROI目标`>0 THEN ROUND(100.0 * `ROI` / `ROI目标`, 2) ELSE 0 END, '%')"
+      ],
+      "orderby": [
+        "日期, ASC"
+      ],
+      "summary": [
+        "SUM,汇总; 花费, 花费目标, 点击, 成交额"
+      ],
+      "summary_calc": {
+        "汇总": [
+          "ROI;/,成交额,花费;2",
+          "CPC;/,花费,点击;2"
+        ]
+      }
+    },
+    {
+      "name": "client_simba_daily_report_tmp2",
+      "source": "cube",
+      "store": "client_simba_daily_report_tmp",
+      "dimensions": "日期, 周数据, 展现, CTR, 花费, 花费目标, 直接成交笔数, 直接成交额, CPC, 点击, ROI, ROI目标, 成交笔数, 成交额, 收藏店铺量, 收藏宝贝量, CVR, CPM, CPU",
+      "mappings": [
+        "日期;record_on",
+        "周数据;CONCAT('第', week_id, '周', ' / ', day_id)",
+        "展现;impressions",
+        "点击;click",
+        "CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END",
+        "CPC;CASE WHEN click>0 THEN ROUND(cost / click / 100.0, 2) ELSE 0 END",
+        "花费;ROUND(cost/100.0,2)",
+        "花费目标;cost_goal",
+        "直接成交笔数;direct_pay_count",
+        "直接成交额;ROUND(direct_pay/100.0,2)",
+        "成交笔数;pay_count",
+        "成交额;ROUND(pay/100.0,2)",
+        "添加购物车量;carttotal",
+        "收藏店铺量;fav_shop_count",
+        "收藏宝贝量;fav_item_count",
+        "ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END",
+        "ROI目标;roi_goal",
+        "CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END",
+        "CPU;CASE WHEN pay_count>0 THEN ROUND(cost / pay_count / 100.0, 2) ELSE 0 END",
+        "CPM;CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions / 100.0 , 2) ELSE 0 END"
+      ]
+    },
+    {
+      "name": "client_simba_daily_report_tmp",
+      "source": "mysql",
+      "store": "skyline.simba_client_rpt_daily, r",
+      "join": [
+        {
+          "type": "left join",
+          "store": "skyline.client_goal_settings, g",
+          "on": [
+            "g.client_id;=;r.client_id",
+            "g.record_on;=;r.record_on",
+            "g.platform;=;simba"
+          ]
+        }
+      ],
+      "dimensions": "record_on, week_id, day_id, cost_goal, roi_goal",
+      "mappings": [
+        "week_id;skyline.week_of_year(r.record_on)",
+        "day_id;skyline.day_of_week(r.record_on)",
+        "cost_goal;IFNULL(g.cost, 0)",
+        "roi_goal;IFNULL(g.roi, 0)"
+      ],
+      "aggregates": [
+        [
+          "SUM",
+          "impressions;impressions",
+          "click;click",
+          "cost;cost",
+          "direct_pay_count;direct_pay_count",
+          "direct_pay;direct_pay",
+          "direct_pay_count + indirect_pay_count;pay_count",
+          "direct_pay + indirect_pay;pay",
+          "carttotal;carttotal",
+          "fav_item_count;fav_item_count",
+          "fav_shop_count;fav_shop_count"
+        ]
+      ],
+      "filter": [
+        "r.source;=;0",
+        "r.record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@"
+      ]
+    },
+    {
+      "name": "client_zhizuan_daily_report",
+      "display": {
+        "title": "钻展实际"
+      },
+      "source": "cube",
+      "store": "client_zhizuan_daily_report_tmp2",
+      "dimensions": "日期, 周数据, 花费, 花费目标, 花费完成率, CPC, 点击, ROI, ROI目标, ROI完成率, 成交金额",
+      "mappings": [
+        "花费完成率;CONCAT(CASE WHEN `花费目标`>0 THEN ROUND(`花费` / `花费目标`, 2) ELSE 0 END, '%')",
+        "ROI完成率;CONCAT(CASE WHEN `ROI目标`>0 THEN ROUND(`ROI` / `ROI目标`, 2) ELSE 0 END, '%')"
+      ],
+      "orderby": [
+        "日期, ASC"
+      ],
+      "summary": [
+        "SUM,汇总; 花费, 花费目标, 点击, 成交金额"
+      ],
+      "summary_calc": {
+        "汇总": [
+          "ROI;/,成交金额,花费;2",
+          "CPC;/,花费,点击量;2"
+        ]
+      }
+    },
+    {
+      "name": "client_zhizuan_daily_report_tmp2",
+      "source": "cube",
+      "store": "client_zhizuan_daily_report_tmp",
+      "dimensions": "日期, 周数据, 花费, 花费目标, 展现, 点击, CTR, ROI, ROI目标, 15订单数, 15订单金额, 成交金额, 添加购物车量, 收藏店铺量, 收藏宝贝量, CPC, CVR, CPM, CPU",
+      "mappings": [
+        "日期;record_on",
+        "周数据;CONCAT('第', week_id, '周', ' / ', day_id)",
+        "展现;impressions",
+        "点击;click",
+        "CTR;CASE WHEN impressions>0 THEN ROUND(100.0 * click / impressions, 2) ELSE 0 END",
+        "CPC;CASE WHEN click>0 THEN ROUND(1.0 * cost / click, 2) ELSE 0 END",
+        "花费;ROUND(cost,2)",
+        "花费目标;cost_goal",
+        "成交订单数;pay_count",
+        "成交金额;ROUND(pay,2)",
+        "15订单数;gmv_count",
+        "15订单金额;ROUND(gmv_amt,2)",
+        "添加购物车量;cart",
+        "收藏店铺量;fav_shop_count",
+        "收藏宝贝量;fav_item_count",
+        "ROI;CASE WHEN cost>0 THEN ROUND(1.0 * pay / cost, 2) ELSE 0 END",
+        "ROI目标;roi_goal",
+        "CVR;CASE WHEN click>0 THEN ROUND(100.0 * pay_count / click, 2) ELSE 0 END",
+        "CPU;CASE WHEN pay_count>0 THEN ROUND(1.0 * cost / pay_count, 2) ELSE 0 END",
+        "CPM;CASE WHEN impressions>0 THEN ROUND(1000.0 * cost / impressions, 2) ELSE 0 END"
+      ]
+    },
+    {
+      "name": "client_zhizuan_daily_report_tmp",
+      "source": "mysql",
+      "store": "skyline.zhizuan_campaign_rpt_daily, r",
+      "join": [
+        {
+          "type": "left join",
+          "store": "skyline.client_goal_settings, g",
+          "on": [
+            "g.client_id;=;r.client_id",
+            "g.record_on;=;r.record_on",
+            "g.platform;=;zuanshi"
+          ]
+        }
+      ],
+      "dimensions": "record_on, week_id, day_id, cost_goal, roi_goal",
+      "mappings": [
+        "week_id;skyline.week_of_year(r.record_on)",
+        "day_id;skyline.day_of_week(r.record_on)",
+        "cost_goal;IFNULL(g.cost, 0)",
+        "roi_goal;IFNULL(g.roi, 0)"
+      ],
+      "aggregates": [
+        [
+          "SUM",
+          "impressions;impressions",
+          "uv;uv",
+          "click;click",
+          "cost;cost",
+          "cart;cart",
+          "fav_item_count;fav_item_count",
+          "fav_shop_count;fav_shop_count",
+          "gmv_amt;gmv_amt",
+          "gmv_count;gmv_count",
+          "pay;pay",
+          "pay_count;pay_count"
+        ]
+      ],
+      "filter": [
+        "r.record_on;between;@@@@@START_DATE@@@@@;@@@@@END_DATE@@@@@"
+      ]
+    }
+  ]
+}

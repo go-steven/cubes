@@ -1,0 +1,16 @@
+{
+  "report":["dimension_report"],
+  "cubes" : [ {
+    "name": "dimension_report",
+    "source": "mysql",
+    "store": "skyline.zhizuan_campaign_rpt_daily",
+    "dimensions":"client_id, campaign_id, campaign_name, record_on, impressions, uv, click, cost",
+    "filter": [
+      "client_id;=;1",
+      "record_on;between;2017-03-06;2017-03-12"
+    ],
+    "orderby":["record_on, DESC"],
+    "limit":"1,0"
+  }
+  ]
+}

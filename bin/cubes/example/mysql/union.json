@@ -1,0 +1,40 @@
+{
+  "report":["union_report"],
+  "cubes" :  [
+    {
+      "name": "union_report",
+      "source": "cube",
+      "union": ["select_report1", "select_report2,union", "select_report2,union all"],
+      "orderby":["record_on, ASC"],
+      "limit":"1000, 0"
+    },
+    {
+      "name": "select_report1",
+      "_comment": "Select cube example-1",
+      "source": "mysql",
+      "store": "skyline.zhizuan_campaign_rpt_daily",
+      "filter": [
+        "client_id;=;1",
+        "record_on;between;2017-03-06;2017-03-12"
+      ],
+      "orderby": [
+        "record_on, DESC"
+      ],
+      "limit": "1, 0"
+    },
+    {
+      "name": "select_report2",
+      "_comment": "Select cube example-2",
+      "source": "mysql",
+      "store": "skyline.zhizuan_campaign_rpt_daily",
+      "filter": [
+        "client_id;=;1",
+        "record_on;between;2017-03-06;2017-03-12"
+      ],
+      "orderby": [
+        "record_on, DESC"
+      ],
+      "limit": "2, 0"
+    }
+  ]
+}

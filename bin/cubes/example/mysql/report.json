@@ -1,0 +1,32 @@
+{
+  "report":["simba_weekly_report"],
+  "cubes": [
+    {
+      "name": "simba_weekly_report",
+      "source": "mysql",
+      "store": "skyline.zhizuan_campaign_rpt_daily,simba",
+      "filter": [
+        "simba.client_id;=;1",
+        "simba.record_on;between;2017-03-06;2017-03-12"
+      ],
+      "mappings": [
+        "Click;simba.click",
+        "Cost;simba.cost"
+      ],
+      "dimensions":"tag1, tag2",
+      "aggregates": [
+        ["SUM","Click;TotalClick","Cost;TotalCost"]
+      ],
+      "tags": {
+        "tag1": [
+          "EC;campaign_name;REGEXP;.*EC.*",
+          "FC;campaign_name;REGEXP;.*FC.*"
+        ],
+        "tag2": [
+          "净化器;campaign_name;REGEXP;.*净化器.*",
+          "吸尘器;campaign_name;REGEXP;.*吸尘器.*"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "report":["keyword_cube"],
+  "_comment": "",
+  "cube":       {
+    "name": "keyword_cube",
+    "_comment": "",
+    "source": "csv,./example/csv/aaa.csv",
+    "dimensions": "product,subway_item",
+    "orderby": [
+      "product,ASC",
+      "subway_item,ASC"
+    ],
+    "filter": [
+      [
+        "product;!=;",
+        "subway_item;!=;"
+      ]
+    ],
+    "aggregates": [
+      [
+        "SUM",
+        "f7;展现量",
+        "f8;点击量",
+        "f9;花费",
+        "f15;直接成交金额",
+        "f16;直接成交笔数",
+        "f17;间接成交金额",
+        "f18;间接成交笔数",
+        "f19;总成交金额",
+        "f20;总成交笔数",
+        "f21;宝贝收藏数",
+        "f22;店铺收藏数",
+        "f23;总收藏数",
+        "f25;直接购物车数",
+        "f26;间接购物车数",
+        "f27;总购物车数"
+      ],
+      [
+        "COUNT",
+        "*;记录数"
+      ]
+    ],
+    "tags": {
+      "product": [
+        "ec;f3;REGEXP;.*HP01|HP02|AM11|AM10|AM06|AM07|AM08|TP02|DP01|AM09.*",
+        "fc;f3;REGEXP;.*DC26|DC36|DC48|DC52|V6TopDog|V6Car|V6Motorhead|V6Absolute|V8Absolute|V8Fluffy|V6Fluffy|V6Fluffy＋|V6Origin|CY22|V6Mattress|DC45.*",
+        "pc;f3;REGEXP;.*HD01.*"
+      ],
+      "subway_item": [
+        "净化;f3;REGEXP;.*AM11|HP01|HP02.*",
+        "风扇;f3;REGEXP;.*AM06|AM07|AM08|TP02|DP01.*",
+        "取暖器;f3;REGEXP;.*AM09.*",
+        "加湿器;f3;REGEXP;.*AM10.*",
+        "吸尘器;f3;REGEXP;.*V6TopDog|V6Car|V6Motorhead|V6Origin|V6Fluffy|V6Fluffy＋|V6Absolute|V8Absolute|V8Fluffy|DC45.*",
+        "车载吸尘器;f3;REGEXP;.*V6Car.*",
+        "圆筒吸尘器;f3;REGEXP;.*CY22|DC26|DC36|DC48|DC52.*",
+        "除螨仪;f3;REGEXP;.*V6Mattress.*",
+        "吹风机;f3;REGEXP;.*HD01.*"
+      ]
+    }
+  }
+}
